@@ -1,6 +1,6 @@
 package com.Kadir.recipeWebsite.Models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,8 @@ import java.io.Serializable;
 public class Ingredient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ingredient_id;
+    @Column(name="ingredient_id")
+    private Long id;
     @ManyToOne
     @JoinColumn(name="recipe_id")
     private Recipe recipe;

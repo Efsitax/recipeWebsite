@@ -1,6 +1,6 @@
 package com.Kadir.recipeWebsite.Models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 public class RecipePhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long recipe_photo_id;
+    @Column(name="recipe_photo_id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="recipe_id")

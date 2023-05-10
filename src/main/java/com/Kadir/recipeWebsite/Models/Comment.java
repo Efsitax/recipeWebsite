@@ -1,6 +1,6 @@
 package com.Kadir.recipeWebsite.Models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,8 @@ import java.util.Date;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long comment_id;
+    @Column(name="comment_id")
+    private Long id;
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
