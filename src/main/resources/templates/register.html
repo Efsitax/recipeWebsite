@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kayıt Formu</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#registerForm').submit(function(event) {
+                event.preventDefault(); // Formun varsayılan gönderimini engelle
+
+                var formData = {
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                    email: $('#email').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/register',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        alert('Kayıt başarıyla tamamlandı');
+                        // Kayıt başarılı olduğunda yönlendirme yapabilirsiniz
+                        // Örneğin:
+                        // window.location.href = '/login';
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Kayıt işlemi başarısız oldu. Hata: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h2>Kayıt Formu</h2>
+
+<form id="registerForm">
+    <div>
+        <label for="username">Kullanıcı Adı:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+        <label for="password">Parola:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <label for="email">E-posta:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <button type="submit">Kayıt Ol</button>
+</form>
+</body>
+</html>
