@@ -1,6 +1,6 @@
 package com.Kadir.recipeWebsite.Models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import com.Kadir.recipeWebsite.Enums.Role;
 import lombok.AllArgsConstructor;

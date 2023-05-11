@@ -36,6 +36,18 @@ public class AuthenticationService {
         return UserResponse.builder().token(token).build();
 
     }
+    public UserResponse adminSave(UserDto userDto) {
+        User user = User.builder()
+                .username(userDto.getUsername())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .name(userDto.getName())
+                .surname(userDto.getSurname())
+                .role(Role.ADMIN).build();
+        userRepository.save(user);
+        var token = jwtService.generateToken(user);
+        return UserResponse.builder().token(token).build();
+    }
+
 
     public UserResponse auth(UserRequest userRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword()));
