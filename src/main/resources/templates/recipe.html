@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/css/login.css">
+  <div th:insert="~{fragments/head :: head}"></div>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <div class="login-container">
+    <h2>Add Recipe</h2>
+    <form>
+      <div class="form-group" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
+      </div>
+      <div class="form-group">
+        <label for="content">Content:</label>
+        <input type="msg" id="content" name="content" required>
+      </div>
+      <div id="texts" class="form-group"></div>
+      <div class="form-group">
+        <input type="file" id="img" name="images" multiple>
+      </div>
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-primary" id="appendText">Append Ingredient</button>
+        <button type="button" class="btn btn-primary" onclick="addRecipe()">Save</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  let idText=0;
+  document.getElementById("appendText").addEventListener("click", function() {
+    // Retrieve the form element
+    const div = document.createElement("div");
+    div.setAttribute("class","form-group");
+    const label = document.createElement("label");
+    label.setAttribute("for","text-"+idText);
+    label.innerHTML = (idText+1)+". Ingredient:";
+    div.appendChild(label);
+    const input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("id","text-"+idText++);
+    input.setAttribute("class","textBoxes");
+    div.appendChild(input);
+    var divTexts = document.getElementById("texts");
+
+    divTexts.appendChild(div);
+  });
+  function addRecipe() {
+    event.preventDefault();
+    var formData = new FormData();
+    var files = $('#img')[0].files;
+    var title = $("#title").val();
+    var description = $("#description").val();
+    var content = $("#content").val();
+    var textBoxes = document.getElementsByClassName("textBoxes");
+    var texts = [];
+    for (let i = 0; i < textBoxes.length; i++) {
+      texts.push(textBoxes[i].value);
+    }
+    for (var i = 0; i < files.length; i++) {
+      formData.append('photos', files[i]);
+    }
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("content", content);
+    formData.append("ingredients", texts);
+    console.log(formData);
+    $.ajax({
+      url: '/recipe/add',
+      type: 'POST',
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error(jqXHR.responseText);
+      }
+    });
+  }
+</script>
+</body>
+</html>
