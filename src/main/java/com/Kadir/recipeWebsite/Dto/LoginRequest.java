@@ -1,4 +1,4 @@
-package com.Kadir.recipeWebsite.DTO;
+package com.Kadir.recipeWebsite.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserResponse {
-
-    private String token;
+@NoArgsConstructor
+public class LoginRequest {
+    private String username;
+    private String password;
 }

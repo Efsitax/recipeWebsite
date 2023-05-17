@@ -1,6 +1,6 @@
 package com.Kadir.recipeWebsite.Models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.Kadir.recipeWebsite.Enums.Role;
 import lombok.AllArgsConstructor;
@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -35,12 +36,16 @@ public class User implements UserDetails{
     @Lob
     private byte[] profile_photo;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    Role role;
+    private List<Role> roles;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.name()))
+                .collect(Collectors.toList());
     }
 
     @Override

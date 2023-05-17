@@ -1,4 +1,4 @@
-package com.Kadir.recipeWebsite.DTO;
+package com.Kadir.recipeWebsite.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-
+public class RegistrationRequest {
+    private String username;
+    private String password;
     private String name;
     private String surname;
     private String email;
-    private String username;
-    private String password;
 }
